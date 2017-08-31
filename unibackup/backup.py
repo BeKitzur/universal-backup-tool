@@ -20,8 +20,8 @@ class Backuper:
         self.options = options
 
     def backup(self):
-        self.dump_name = self.dumper.dump(self.options)
-        self.uploader.upload(self.options, self.dump_name)
+        self.options.update(self.dumper.dump(self.options))
+        self.uploader.upload(self.options)
         self.clean()
 
     @classmethod
@@ -45,9 +45,9 @@ class Backuper:
 
     def clean(self):
         try:
-            os.remove(self.dump_name)
+            os.remove(self.options['out_name'])
         except IsADirectoryError:
-            shutil.rmtree(self.dump_name)
+            shutil.rmtree(self.options['out_name'])
 
 
 def run():

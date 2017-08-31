@@ -5,7 +5,7 @@ import uploaders
 class Uploader(metaclass=ABCMeta):
 
     @abstractclassmethod
-    def upload(self, options, path):
+    def upload(self, options):
         pass
 
 

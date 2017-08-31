@@ -1,6 +1,4 @@
 import subprocess
-import datetime
-
 import util
 from dumpers.dumper import Dumper
 
@@ -8,27 +6,24 @@ MONGODUMP_OPTIONS = ['host', 'port', 'username', 'password',
                      'db', 'collection', 'query', 'archive', 'out', 'gzip']
 
 
-def get_date(options):
-    if 'date_format' in options:
-        return util.get_date(options['date_format'])
-    else:
-        return util.get_date()
-
-
 def get_out_name(options):
     out_name = ""
+    out_prefix = ""
     if 'out_prefix' in options:
-        out_name += options['out_prefix']
+        out_prefix = options['out_prefix']
     else:
         for o in ['source', 'db', 'collection']:
             if o in options:
-                out_name += "{}-".format(options[o])
-    out_name += get_date(options)
+                out_prefix += "{}-".format(options[o])
+
+    out_name += out_prefix
+    out_name += util.get_date(options['date_format'])
     if ('archive' in options and options['archive']) \
             and ('gzip' in options and options['gzip']):
         out_name += '.gz'
 
-    return out_name
+    return {"out_name": out_name,
+            "out_prefix": out_prefix}
 
 
 def option_string(opt, arg):
@@ -46,13 +41,14 @@ class MongoDumper(Dumper):
         self.password = password
 
     def dump(self, options):
-        out_name = get_out_name(options)
+        out_name_dict = get_out_name(options)
+        out_name = out_name_dict['out_name']
         options = self.build_option_list(options, out_name)
 
         print("Dumping...")
         print(options)
         subprocess.run(['mongodump'] + options)
-        return out_name
+        return out_name_dict
 
     @classmethod
     def from_dict(cls, dictionary):
