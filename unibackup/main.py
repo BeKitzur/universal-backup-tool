@@ -21,14 +21,14 @@ def load_yaml_config(config_file):
 
 def merge(dict_1, dict_2):
     """Merge two dictionaries.
-    Values that evaluate to true take priority over falsy values.
+    Values that evaluate to true take priority over false values.
     `dict_1` takes priority over `dict_2`.
     """
     return dict((str(key), dict_1.get(key) or dict_2.get(key))
                 for key in set(dict_2) | set(dict_1))
 
 
-if __name__ == '__main__':
+def main():
     arguments = docopt(__doc__, version='0.1')
     config_file = arguments['--config']
 
@@ -40,3 +40,7 @@ if __name__ == '__main__':
         backup.config = arguments
 
     backup.run()
+
+
+if __name__ == '__main__':
+    main()
