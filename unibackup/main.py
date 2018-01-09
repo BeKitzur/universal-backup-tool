@@ -7,9 +7,9 @@ Usage:
     -h --help  Show help
     -c <config> --config=<config>  Configuration file
 """
-from docopt import docopt
 import yaml
-import backup
+from docopt import docopt
+from . import backup
 
 
 def load_yaml_config(config_file):

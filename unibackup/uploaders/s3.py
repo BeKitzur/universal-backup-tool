@@ -1,6 +1,6 @@
 import boto3
 
-from uploaders.uploader import Uploader
+from .uploader import Uploader
 from datetime import datetime, timedelta, timezone
 
 S3_OPTIONS = ['bucket', 'aws_access_key_id', 'aws_secret_access_key']

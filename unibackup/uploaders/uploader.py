@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractclassmethod
-import uploaders
 
 
 class Uploader(metaclass=ABCMeta):
@@ -19,6 +18,7 @@ def create(targets_list, name):
             break
 
     if target['type'] == 's3':
-        uploader = uploaders.S3Uploader.from_dict(target)
+        from .s3 import S3Uploader
+        uploader = S3Uploader.from_dict(target)
 
     return uploader

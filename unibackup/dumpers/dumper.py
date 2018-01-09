@@ -1,7 +1,5 @@
 from abc import ABCMeta, abstractclassmethod
 
-import dumpers
-
 
 class Dumper(metaclass=ABCMeta):
     @abstractclassmethod
@@ -19,6 +17,7 @@ def create(sources_list, name):
             break
 
     if source['type'] == 'mongodb':
-        dumper = dumpers.MongoDumper.from_dict(source)
+        from .mongo import MongoDumper
+        dumper = MongoDumper.from_dict(source)
 
     return dumper

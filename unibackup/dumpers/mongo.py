@@ -1,6 +1,6 @@
 import subprocess
-import util
-from dumpers.dumper import Dumper
+from unibackup import util
+from .dumper import Dumper
 
 MONGODUMP_OPTIONS = ['host', 'port', 'username', 'password',
                      'db', 'collection', 'query', 'archive', 'out', 'gzip']
@@ -83,4 +83,3 @@ class MongoDumper(Dumper):
         options_list.append(option_string(out_option, out_name))
 
         return options_list
-

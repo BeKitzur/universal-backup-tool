@@ -1,9 +1,7 @@
 import os
-
 import shutil
-
-import dumpers
-import uploaders
+from . import dumpers
+from . import uploaders
 
 config = None
 backupers_list = []
