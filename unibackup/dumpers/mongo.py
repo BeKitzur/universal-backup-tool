@@ -3,6 +3,7 @@ from unibackup import util
 from .dumper import Dumper
 
 MONGODUMP_OPTIONS = ['host', 'port', 'username', 'password',
+                     'authenticationDatabase',
                      'db', 'collection', 'query', 'archive', 'out', 'gzip']
 
 
@@ -46,7 +47,6 @@ class MongoDumper(Dumper):
         options = self.build_option_list(options, out_name)
 
         print("Dumping...")
-        print(options)
         subprocess.run(['mongodump'] + options)
         return out_name_dict
 
