@@ -7,8 +7,8 @@ S3_OPTIONS = ['bucket', 'aws_access_key_id', 'aws_secret_access_key']
 
 
 class S3Uploader(Uploader):
-    def __init__(self, bucket, aws_access_key_id,
-                 aws_secret_access_key, aws_region=None):
+    def __init__(self, bucket, aws_access_key_id=None,
+                 aws_secret_access_key=None, aws_region=None):
         self.aws_region = aws_region
         self.s3 = boto3.resource('s3',
                                  aws_access_key_id=aws_access_key_id,
@@ -25,8 +25,14 @@ class S3Uploader(Uploader):
     @classmethod
     def from_dict(cls, dictionary):
         bucket = dictionary['bucket']
-        aws_access_key_id = dictionary['aws_access_key_id']
-        aws_secret_access_key = dictionary['aws_secret_access_key']
+
+        aws_access_key_id = None
+        if 'aws_access_key_id' in dictionary:
+            aws_access_key_id = dictionary['aws_access_key_id']
+
+        aws_secret_access_key = None
+        if 'aws_secret_access_key' in dictionary:
+            aws_secret_access_key = dictionary['aws_secret_access_key']
 
         aws_region = None
         if 'aws_region' in dictionary:
