@@ -2,6 +2,13 @@
 
 'Create backups from any sources and push to any target'.
 
+The initial goal is to create a universal backup tool that could create
+multiple backups from various sources and store them in various places.
+
+Currently, this tool only supports creating a dump of a MongoDB database and
+pushing it to an S3 bucket, and deleting old backups in S3 (see the `retention`
+configuration option in the example).
+
 ## Install
 
 ~~~
